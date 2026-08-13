@@ -15,13 +15,14 @@ import { Footer } from "@/components/sections/Footer";
 export default function Home() {
   return (
     <main>
+      <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
       <Topbar />
       <Hero />
       <Story />
-      <Roadmap />
-      <Manifesto />
       <HowToBuy />
       <ContractSection />
+      <Roadmap />
+      <Manifesto />
       <BuildInPublic />
       <Community />
       <MemeWall />

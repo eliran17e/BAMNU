@@ -6,7 +6,7 @@ export function HowToBuy() {
   return (
     <section id="how-to-buy" className="how-buy section-pad" aria-labelledby="buy-title">
       <header className="section-heading inverse">
-        <p className="kicker">04 / HOW TO BUY</p>
+        <p className="kicker">02 / HOW TO BUY</p>
         <h2 id="buy-title">FOUR STEPS.<br/>NO FUNNY BUSINESS.</h2>
         <p>No custom wallet connection. No mystery swap. Just the official link.</p>
       </header>

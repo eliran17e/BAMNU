@@ -4,7 +4,7 @@ export function Manifesto() {
   return (
     <section className="manifesto" aria-labelledby="manifesto-title">
       <div className="manifesto-intro">
-        <p className="kicker">03 / THE BAMNU MANIFESTO</p>
+        <p className="kicker">05 / THE BAMNU MANIFESTO</p>
         <h2 id="manifesto-title">THE RULES ARE<br/>PRETTY SIMPLE.</h2>
         <p className="scribble">We wrote them down anyway.</p>
       </div>

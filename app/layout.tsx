@@ -1,9 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import { Chakra_Petch } from "next/font/google";
 import "./globals.css";
+
+const display = Chakra_Petch({ subsets: ["latin"], weight: ["500", "700"], variable: "--font-display", display: "swap" });
 
 const title = "BAMNU — The Panda Who Refused to Quit";
 const description = "Meet BAMNU, the Solana meme coin built publicly from zero. No fake hype—just one stubborn panda and a growing community.";
+
+export const viewport: Viewport = {
+  themeColor: "#060807",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -22,5 +29,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}</body></html>;
+  return <html lang="en" className={display.variable}><body>{children}</body></html>;
 }

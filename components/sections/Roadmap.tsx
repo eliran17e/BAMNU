@@ -72,7 +72,7 @@ export function Roadmap() {
   return (
     <section id="roadmap" className="roadmap section-pad" aria-labelledby="roadmap-title">
       <header className="section-heading">
-        <p className="kicker">02 / ROADMAP</p>
+        <p className="kicker">04 / ROADMAP</p>
         <h2 id="roadmap-title">THE ROAD<br/><em>AHEAD.</em></h2>
         <p>Four phases. One stubborn panda walking all of them.</p>
       </header>
