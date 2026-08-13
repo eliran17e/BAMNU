@@ -17,7 +17,7 @@
   /* text */
   --text: #eef2ea;
   --text-dim: #a9b3a8;
-  --text-faint: #6b756b;
+  --text-faint: #808a80;
   --ink: #060807;
   /* glow */
   --glow-green: 0 0 12px rgba(158, 234, 34, .5), 0 0 42px rgba(158, 234, 34, .16);
@@ -305,7 +305,8 @@ footer { padding: 70px 5vw 28px; background: var(--bg-deep); color: var(--text);
   .hero-lede { order: 3; margin-top: 22px; }
   .hero-actions { order: 4; }
   .hero-actions .button { flex: 1 1 100%; }
-  .hero-contract { order: 5; margin-top: 22px; }
+  .market-stats { order: 5; margin-top: 22px; }
+  .hero-contract { order: 6; margin-top: 14px; }
   .hero-contract code { font-size: .63rem; }
   .hero-contract .copy-button span:first-child { font-size: 0; }
   .hero-contract .copy-button span:first-child::after { content: "COPY"; font-size: .65rem; }
