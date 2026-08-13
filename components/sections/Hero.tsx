@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { CopyButton } from "@/components/ui/CopyButton";
-import { BUY_URL, CONTRACT } from "@/components/config";
+import { BUY_URL, CONTRACT, currentDay } from "@/components/config";
 import { MarketStats } from "@/components/market/MarketStats";
 
 const HeroCanvas = dynamic(() => import("@/components/three/HeroCanvas"), { ssr: false, loading: () => null });
@@ -14,6 +14,7 @@ export function Hero() {
   const [reaction, setReaction] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
   const [wantsMotion, setWantsMotion] = useState(false);
+  const day = currentDay();
 
   useEffect(() => {
     setWantsMotion(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -78,9 +79,9 @@ export function Hero() {
       </div>
 
       <div className="walk-stage" aria-label="BAMNU keeps walking">
-        <div className="sun-disc" aria-hidden="true" />
+        <div className="sun-disc" aria-hidden="true" data-day={day} suppressHydrationWarning />
         <div className="bamboo bamboo-back" aria-hidden="true"><i/><i/><i/><i/></div>
-        <div className="walk-quote" aria-hidden="true">DAY 38<br/>STILL WALKING</div>
+        <div className="walk-quote" aria-hidden="true" suppressHydrationWarning>DAY {day}<br/>STILL WALKING</div>
         <button className={`mascot-button ${reaction ? "reacting" : ""}`} type="button" onClick={react} aria-label="Tap BAMNU for a reaction">
           <span className="mascot-shadow" />
           <img src="/assets/mascot-logo.webp" alt="BAMNU, the panda who refused to quit" width="1000" height="1000" fetchPriority="high" />
