@@ -77,12 +77,12 @@ img { display: block; max-width: 100%; }
 .button-primary { background: var(--green); color: var(--ink); box-shadow: var(--glow-green); }
 .button-secondary { background: rgba(255,255,255,.04); color: var(--text); border-color: var(--line); }
 .button:hover { transform: translateY(-2px); filter: brightness(1.08); }
-.market-stats { margin-top: 26px; max-width: 660px; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid rgba(158,234,34,.35); border-radius: 12px; background: linear-gradient(160deg, rgba(158,234,34,.07), rgba(158,234,34,.015)), var(--glass); backdrop-filter: blur(10px); overflow: hidden; box-shadow: 0 0 26px rgba(158,234,34,.12); }
+.market-stats { margin-top: 26px; max-width: 660px; display: grid; grid-template-columns: repeat(4, 1fr); border: 2px solid rgba(158,234,34,.55); border-radius: 12px; background: linear-gradient(160deg, rgba(158,234,34,.07), rgba(158,234,34,.015)), var(--glass); backdrop-filter: blur(10px); overflow: hidden; box-shadow: 0 0 30px rgba(158,234,34,.18); }
 .stat { padding: 14px 16px; border-right: 1px solid var(--line); }
 .stat:last-child { border-right: 0; }
 .stat.wide { grid-column: 1 / -1; border-right: 0; }
 .stat span { display: block; margin-bottom: 5px; font-family: var(--font-d); font-size: .56rem; font-weight: 700; letter-spacing: .16em; color: var(--text-dim); }
-.stat b { font-family: var(--font-d); font-size: 1.3rem; font-weight: 700; color: var(--green); text-shadow: 0 0 16px rgba(158,234,34,.45); }
+.stat b { font-family: var(--font-d); font-size: 1.3rem; font-weight: 700; color: var(--text); white-space: nowrap; }
 .stat.up b { color: var(--green); text-shadow: 0 0 14px rgba(158,234,34,.5); }
 .stat.down b { color: #ee5b7a; text-shadow: 0 0 14px rgba(238,91,122,.4); }
 .stat.skeleton b { color: var(--text-faint); }
@@ -318,6 +318,11 @@ footer { padding: 70px 5vw 28px; background: var(--bg-deep); color: var(--text);
   .nav-buy span { display: none; }
   .nav-cta { gap: 8px; }
   .nav-socials a { width: 32px; height: 32px; font-size: .8rem; }
+  .market-stats { grid-template-columns: 1fr 1fr; }
+  .stat { padding: 12px 14px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .stat:nth-child(odd) { border-right: 1px solid var(--line); }
+  .stat:nth-child(3), .stat:nth-child(4) { border-bottom: 0; }
+  .stat span { min-height: 2em; }
   .stat b { font-size: 1.05rem; }
   .hero { min-height: auto; padding: 100px 20px 70px; display: flex; flex-direction: column; align-items: stretch; }
   .hero::before { width: 90vw; height: 90vw; top: -42vw; right: -34vw; }
