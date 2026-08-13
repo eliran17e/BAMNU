@@ -27,10 +27,10 @@ export const buySteps = [
   ["04", "VERIFY + DECIDE", "Match the full contract address. Trade responsibly."],
 ];
 
-export const faqs = [
+export const faqsFor = (day: number) => [
   ["What is BAMNU?", "BAMNU is a Solana meme coin and an internet character built publicly from zero—one stubborn step at a time."],
   ["Why a panda?", "Because pandas look calm while quietly refusing to cooperate. That felt right."],
-  ["How was BAMNU created?", "The creator shared 38 days of logos, videos, memes, milestones, setbacks, and building in public."],
+  ["How was BAMNU created?", `The creator has shared ${day} days of logos, videos, memes, milestones, setbacks, and building in public.`],
   ["Where can I buy $BAMNU?", "Only through the official Pump.fun link shown throughout this site. Always verify the complete contract address."],
   ["What is the official contract address?", CONTRACT],
   ["Is BAMNU financial advice?", "No. BAMNU is a meme coin, crypto is highly volatile, and nothing here is financial advice."],

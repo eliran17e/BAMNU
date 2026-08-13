@@ -66,7 +66,7 @@ export function Hero() {
       <div className="hero-copy">
         <p className="eyebrow"><span className="pulse-dot" /> SOLANA · BUILT IN PUBLIC</p>
         <h1 id="hero-title"><span>BAMNU—</span>THE PANDA WHO <em>REFUSED</em> TO QUIT.</h1>
-        <p className="hero-lede">Started from zero. Built together. No fake hype—just one stubborn creator, one panda, and 38 days of showing up.</p>
+        <p className="hero-lede" suppressHydrationWarning>Started from zero. Built together. No fake hype—just one stubborn creator, one panda, and {day} days of showing up.</p>
         <div className="hero-actions">
           <ExternalLink href={BUY_URL} className="button button-primary">BUY $BAMNU <span>↗</span></ExternalLink>
           <a href="#community" className="button button-secondary">JOIN THE JOURNEY <span>↓</span></a>
