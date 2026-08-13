@@ -329,3 +329,46 @@ footer { padding: 70px 5vw 28px; background: var(--ink); color: var(--white); }
   *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .mascot-button { opacity: 1; transform: none; }
 }
+
+/* Roadmap */
+.roadmap { background: var(--paper); border-bottom: 3px solid var(--ink); }
+.road-track { position: relative; display: grid; grid-template-columns: 1fr 170px 1fr; grid-auto-rows: minmax(330px, auto); gap: 30px 44px; margin-top: 40px; }
+.road-rail { grid-column: 2; grid-row: 1 / 5; position: relative; }
+.road-rail svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.road-base { fill: none; stroke: var(--ink); stroke-width: 26px; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.road-dashes { fill: none; stroke: var(--paper); stroke-width: 3px; stroke-dasharray: .013 .019; vector-effect: non-scaling-stroke; }
+.road-progress { fill: none; stroke: var(--green); stroke-width: 10px; stroke-linecap: round; clip-path: inset(0 0 100% 0); vector-effect: non-scaling-stroke; }
+.road-stop { position: absolute; z-index: 3; width: 54px; height: 54px; margin: -27px 0 0 -27px; display: grid; place-items: center; border: 3px solid var(--ink); border-radius: 50%; background: var(--paper); font-size: 1.3rem; box-shadow: 4px 4px 0 var(--ink); transition: background .3s ease, transform .3s ease; }
+.road-stop.passed { background: var(--green); transform: scale(1.1); }
+.road-panda { position: absolute; z-index: 4; left: 0; top: 0; will-change: transform; }
+.road-panda img { display: block; width: 92px; height: 92px; margin: -80px 0 0 -46px; border: 3px solid var(--ink); border-radius: 50%; background: var(--paper); box-shadow: 0 8px 0 rgba(11,11,10,.22); animation: bodyBounce .76s ease-in-out infinite; }
+.road-card { position: relative; z-index: 2; align-self: center; padding: 28px 26px 30px; border: 3px solid var(--ink); background: var(--white); box-shadow: 8px 8px 0 var(--ink); opacity: .35; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
+.road-card.passed { opacity: 1; transform: none; }
+.road-card:nth-of-type(odd) { grid-column: 1; }
+.road-card:nth-of-type(even) { grid-column: 3; }
+.road-status { position: absolute; top: -14px; right: 18px; padding: 5px 10px; border: 2px solid var(--ink); background: var(--paper); font-size: .58rem; font-weight: 1000; letter-spacing: .09em; }
+.road-card.done .road-status { background: var(--green); }
+.road-card.active .road-status { background: var(--purple); color: var(--white); }
+.road-kicker { margin: 0 0 6px; font-size: .68rem; font-weight: 1000; letter-spacing: .13em; color: var(--purple); }
+.road-card h3 { margin: 0 0 16px; font-size: clamp(1.5rem, 2.3vw, 2.05rem); font-weight: 1000; letter-spacing: -.045em; line-height: .95; text-transform: uppercase; }
+.road-card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+.road-card li { display: flex; gap: 10px; align-items: baseline; font-size: .92rem; font-weight: 700; line-height: 1.35; }
+.road-card li i { font-style: normal; flex: 0 0 auto; }
+.road-tagline { max-width: 620px; margin: 60px auto 0; text-align: center; font-size: 1.05rem; font-weight: 700; line-height: 1.5; }
+.road-tagline strong { display: block; margin-top: 6px; font-weight: 1000; }
+
+@media (max-width: 860px) {
+  .road-track { grid-template-columns: 62px 1fr; grid-auto-rows: auto; gap: 26px 16px; }
+  .road-rail { grid-column: 1; }
+  .road-card:nth-of-type(odd), .road-card:nth-of-type(even) { grid-column: 2; }
+  .road-card { box-shadow: 6px 6px 0 var(--ink); padding: 24px 18px 24px; }
+  .road-base { stroke-width: 18px; }
+  .road-progress { stroke-width: 7px; }
+  .road-stop { width: 42px; height: 42px; margin: -21px 0 0 -21px; font-size: 1rem; box-shadow: 3px 3px 0 var(--ink); }
+  .road-panda img { width: 62px; height: 62px; margin: -56px 0 0 -31px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .road-card { opacity: 1; transform: none; }
+  .road-panda img { animation: none; }
+}

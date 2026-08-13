@@ -16,6 +16,17 @@ const journey = [
 
 const principles = ["NO FAKE HYPE", "NO PRETENDING", "BUILD IN PUBLIC", "KEEP SHOWING UP", "REFUSE TO QUIT", "TOGETHER WE BUILD", "TOGETHER WE GROW"];
 
+const roadmap = [
+  { phase: "PHASE 1", title: "THE BIRTH", emoji: "🐼", status: "done", items: [["✅", "Create BAMNU"], ["✅", "Build the community"], ["✅", "Launch the website & socials"], ["🔥", "Official Launch — 10.08.2026"]] },
+  { phase: "PHASE 2", title: "THE TAKEOVER", emoji: "🚀", status: "active", items: [["🔥", "Grow the BAMNU family"], ["📢", "Meme campaigns & community events"], ["🤝", "Collaborations with creators & communities"], ["📈", "Increase visibility across X & TikTok"]] },
+  { phase: "PHASE 3", title: "BAMNU EVERYWHERE", emoji: "🌎", status: "next", items: [["🌎", "Expand the community"], ["🔥", "Bigger marketing campaigns"], ["🐼", "More memes, more content, more chaos"], ["🤝", "New partnerships & opportunities"]] },
+  { phase: "PHASE 4", title: "THE LONG RUN", emoji: "🏆", status: "next", items: [["💎", "Keep building"], ["🐼", "Keep growing"], ["🚀", "Keep pushing"], ["♾️", "BAMNU is here to stay."]] },
+];
+
+// One S-curve per phase; pathLength is normalized to 1 so scroll progress maps directly.
+const ROAD_PATH = "M50 0 C10 80 10 170 50 250 C90 330 90 420 50 500 C10 580 10 670 50 750 C90 830 90 920 50 1000";
+const STOP_FRACTIONS = [0.125, 0.375, 0.625, 0.875];
+
 const buySteps = [
   ["01", "GET A WALLET", "Use a Solana-compatible wallet you trust."],
   ["02", "ADD SOL", "Fund it with enough SOL for your trade and network fees."],
@@ -69,6 +80,70 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const [reaction, setReaction] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
+  const railRef = useRef<HTMLDivElement>(null);
+  const roadPathRef = useRef<SVGPathElement>(null);
+  const progressPathRef = useRef<SVGPathElement>(null);
+  const pandaRef = useRef<HTMLDivElement>(null);
+  const stopRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [passedCount, setPassedCount] = useState(0);
+
+  useEffect(() => {
+    const rail = railRef.current;
+    const path = roadPathRef.current;
+    const progressPath = progressPathRef.current;
+    const panda = pandaRef.current;
+    if (!rail || !path || !progressPath || !panda) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const total = path.getTotalLength();
+    // The SVG stretches to fill the rail (preserveAspectRatio="none"), so points
+    // from getPointAtLength are in viewBox units and must be scaled to the rail.
+    const toRail = (fraction: number, rect: DOMRect) => {
+      const pt = path.getPointAtLength(fraction * total);
+      return { x: (pt.x / 100) * rect.width, y: (pt.y / 1000) * rect.height };
+    };
+
+    const layoutStops = () => {
+      const rect = rail.getBoundingClientRect();
+      stopRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const { x, y } = toRail(STOP_FRACTIONS[i], rect);
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+      });
+    };
+
+    let frame = 0;
+    const update = () => {
+      const rect = rail.getBoundingClientRect();
+      const progress = reduced ? 1 : Math.min(1, Math.max(0, (window.innerHeight * 0.55 - rect.top) / rect.height));
+      const { x, y } = toRail(progress, rect);
+      panda.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+      // Reveal the green road down to the panda's y. The path only ever descends,
+      // so a vertical clip tracks the walker exactly (dash offsets drift when the
+      // SVG is stretched non-uniformly).
+      progressPath.style.clipPath = `inset(0 0 ${(100 - (y / rect.height) * 100).toFixed(2)}% 0)`;
+      setPassedCount(STOP_FRACTIONS.filter((f) => progress >= f).length);
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    };
+    const onResize = () => {
+      layoutStops();
+      onScroll();
+    };
+
+    layoutStops();
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -115,6 +190,7 @@ export default function Home() {
         <a className="wordmark" href="#top" aria-label="BAMNU home">BAMNU<span>.</span></a>
         <div className="nav-links">
           <a href="#story">STORY</a>
+          <a href="#roadmap">ROADMAP</a>
           <a href="#how-to-buy">HOW TO BUY</a>
           <a href="#community">COMMUNITY</a>
         </div>
@@ -173,9 +249,45 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="roadmap" className="roadmap section-pad" aria-labelledby="roadmap-title">
+        <header className="section-heading">
+          <p className="kicker">02 / ROADMAP</p>
+          <h2 id="roadmap-title">THE ROAD<br/><em>AHEAD.</em></h2>
+          <p>Four phases. One stubborn panda walking all of them.</p>
+        </header>
+        <div className="road-track">
+          <div className="road-rail" ref={railRef} aria-hidden="true">
+            <svg viewBox="0 0 100 1000" preserveAspectRatio="none" focusable="false">
+              <path ref={roadPathRef} className="road-base" d={ROAD_PATH} pathLength={1} />
+              <path className="road-dashes" d={ROAD_PATH} pathLength={1} />
+              <path ref={progressPathRef} className="road-progress" d={ROAD_PATH} pathLength={1} />
+            </svg>
+            {roadmap.map((phase, index) => (
+              <div className={`road-stop ${passedCount > index ? "passed" : ""}`} key={phase.phase} ref={(el) => { stopRefs.current[index] = el; }}>
+                <span>{phase.emoji}</span>
+              </div>
+            ))}
+            <div className="road-panda" ref={pandaRef}>
+              <img src="/assets/mascot-logo.webp" alt="" width="120" height="120" />
+            </div>
+          </div>
+          {roadmap.map((phase, index) => (
+            <article className={`road-card ${phase.status} ${passedCount > index ? "passed" : ""}`} key={phase.phase} style={{ gridRow: index + 1 }}>
+              <span className="road-status">{phase.status === "done" ? "COMPLETE" : phase.status === "active" ? "IN PROGRESS" : "UP NEXT"}</span>
+              <p className="road-kicker">{phase.phase}</p>
+              <h3>{phase.title} <span aria-hidden="true">{phase.emoji}</span></h3>
+              <ul>
+                {phase.items.map(([icon, text]) => <li key={text}><i aria-hidden="true">{icon}</i>{text}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+        <p className="road-tagline">This is not a project built for a few days. <strong>We&rsquo;re here for the long run. 🐼❤️</strong></p>
+      </section>
+
       <section className="manifesto" aria-labelledby="manifesto-title">
         <div className="manifesto-intro">
-          <p className="kicker">02 / THE BAMNU MANIFESTO</p>
+          <p className="kicker">03 / THE BAMNU MANIFESTO</p>
           <h2 id="manifesto-title">THE RULES ARE<br/>PRETTY SIMPLE.</h2>
           <p className="scribble">We wrote them down anyway.</p>
         </div>
@@ -186,7 +298,7 @@ export default function Home() {
 
       <section id="how-to-buy" className="how-buy section-pad" aria-labelledby="buy-title">
         <header className="section-heading inverse">
-          <p className="kicker">03 / HOW TO BUY</p>
+          <p className="kicker">04 / HOW TO BUY</p>
           <h2 id="buy-title">FOUR STEPS.<br/>NO FUNNY BUSINESS.</h2>
           <p>No custom wallet connection. No mystery swap. Just the official link.</p>
         </header>
@@ -202,7 +314,7 @@ export default function Home() {
       <section className="contract-section section-pad" aria-labelledby="contract-title">
         <div className="contract-stamp">THE<br/>REAL<br/>ONE</div>
         <div className="contract-content">
-          <p className="kicker">04 / OFFICIAL CONTRACT ADDRESS</p>
+          <p className="kicker">05 / OFFICIAL CONTRACT ADDRESS</p>
           <h2 id="contract-title">COPY IT.<br/><em>CHECK IT.</em><br/>CHECK IT AGAIN.</h2>
           <div className="contract-box"><code>{CONTRACT}</code><CopyButton /></div>
           <p className="warning"><span>!</span> Impersonator tokens exist. Verify every character before you trade.</p>
@@ -212,7 +324,7 @@ export default function Home() {
       <section className="public-build" aria-labelledby="public-title">
         <div className="public-image"><img src="/assets/built-public.webp" alt="BAMNU appearing on a community broadcast" loading="lazy" width="900" height="900" /></div>
         <div className="public-copy">
-          <p className="kicker">05 / BUILD IN PUBLIC</p>
+          <p className="kicker">06 / BUILD IN PUBLIC</p>
           <h2 id="public-title">38 DAYS.<br/>ALL OUT IN<br/>THE OPEN.</h2>
           <p>Logos. Videos. Updates. Memes. Milestones. Setbacks. Stress. Laughter. Very little sleep.</p>
           <p>We didn’t wait until it looked perfect. We shared the process while it was still messy.</p>
@@ -222,7 +334,7 @@ export default function Home() {
 
       <section id="community" className="community section-pad" aria-labelledby="community-title">
         <header>
-          <p className="kicker">06 / COMMUNITY</p>
+          <p className="kicker">07 / COMMUNITY</p>
           <h2 id="community-title">STARTED FROM ZERO.<br/><em>BUILT TOGETHER.</em></h2>
           <p>The comments are open. The timeline is live. The panda is still walking.</p>
         </header>
@@ -234,7 +346,7 @@ export default function Home() {
       </section>
 
       <section className="meme-wall section-pad" aria-labelledby="meme-title">
-        <div className="meme-header"><div><p className="kicker">07 / MEME WALL</p><h2 id="meme-title">PANDA<br/>PROPAGANDA.</h2></div><p>Official BAMNU moments for now.<br/>Community chaos coming next.</p></div>
+        <div className="meme-header"><div><p className="kicker">08 / MEME WALL</p><h2 id="meme-title">PANDA<br/>PROPAGANDA.</h2></div><p>Official BAMNU moments for now.<br/>Community chaos coming next.</p></div>
         <div className="meme-grid">
           <figure className="meme-large"><img src="/assets/day-one.webp" alt="BAMNU at the river at sunrise" loading="lazy"/><figcaption>ONE PANDA. ONE PLAN. SORT OF.</figcaption></figure>
           <figure className="meme-square"><img src="/assets/the-grind.webp" alt="BAMNU cooking through the grind" loading="lazy"/><figcaption>LET HIM COOK.</figcaption></figure>
@@ -244,7 +356,7 @@ export default function Home() {
       </section>
 
       <section className="faq section-pad" aria-labelledby="faq-title">
-        <header><p className="kicker">08 / FAQ</p><h2 id="faq-title">SHORT ANSWERS.<br/>STRAIGHT FACE.</h2></header>
+        <header><p className="kicker">09 / FAQ</p><h2 id="faq-title">SHORT ANSWERS.<br/>STRAIGHT FACE.</h2></header>
         <div className="faq-list">
           {faqs.map(([question, answer], index) => <details key={question}><summary><span>{String(index + 1).padStart(2, "0")}</span>{question}<i aria-hidden="true">+</i></summary><p>{answer}</p></details>)}
         </div>
