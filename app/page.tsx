@@ -12,6 +12,7 @@ import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Footer } from "@/components/sections/Footer";
 import { Marquee } from "@/components/fx/Marquee";
+import { MusicPlayer } from "@/components/fx/MusicPlayer";
 import { principles } from "@/components/content";
 
 export default function Home() {
@@ -32,6 +33,7 @@ export default function Home() {
       <Faq />
       <FinalCta />
       <Footer />
+      <MusicPlayer />
     </main>
   );
 }

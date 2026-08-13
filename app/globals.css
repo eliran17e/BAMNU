@@ -127,6 +127,21 @@ img { display: block; max-width: 100%; }
 .scroll-cue { position: absolute; z-index: 10; left: 50%; bottom: 18px; display: flex; align-items: center; gap: 12px; transform: translateX(-50%); font-family: var(--font-d); font-size: .56rem; font-weight: 700; letter-spacing: .18em; color: var(--text-dim); }
 .scroll-cue i { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--glass-border); border-radius: 50%; color: var(--green); font-style: normal; animation: nudge 1.5s infinite; }
 
+/* music player */
+.music-player { position: fixed; z-index: 60; right: 18px; bottom: 18px; display: flex; align-items: center; gap: 8px; }
+.music-toggle { display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 16px; border: 1px solid var(--glass-border); border-radius: 999px; background: var(--glass); backdrop-filter: blur(12px); color: var(--green); cursor: pointer; font-family: var(--font-d); font-size: .68rem; font-weight: 700; letter-spacing: .1em; box-shadow: 0 12px 34px rgba(0,0,0,.5); transition: border-color .2s ease, transform .2s ease; }
+.music-toggle:hover { border-color: var(--green); transform: translateY(-1px); }
+.playing .music-toggle { border-color: var(--green); box-shadow: var(--glow-green); }
+.music-icon { font-size: .6rem; }
+.music-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+.music-bars i { width: 3px; height: 4px; border-radius: 1px; background: var(--green); }
+.playing .music-bars i { animation: eq .9s ease-in-out infinite; }
+.playing .music-bars i:nth-child(2) { animation-delay: .2s; }
+.playing .music-bars i:nth-child(3) { animation-delay: .45s; }
+.music-next { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--glass-border); border-radius: 50%; background: var(--glass); backdrop-filter: blur(12px); color: var(--green); cursor: pointer; font-size: .8rem; transition: border-color .2s ease; }
+.music-next:hover { border-color: var(--green); }
+@keyframes eq { 0%,100% { height: 4px } 50% { height: 12px } }
+
 /* scroll reveals */
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; transition-delay: var(--rd, 0s); }
 .reveal.is-inview { opacity: 1; transform: none; }
