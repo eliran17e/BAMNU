@@ -71,7 +71,19 @@ img { display: block; max-width: 100%; }
 .button-primary { background: var(--green); color: var(--ink); box-shadow: var(--glow-green); }
 .button-secondary { background: rgba(255,255,255,.04); color: var(--text); border-color: var(--line); }
 .button:hover { transform: translateY(-2px); filter: brightness(1.08); }
-.hero-contract { margin-top: 26px; max-width: 660px; display: grid; grid-template-columns: 1fr auto; align-items: center; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--glass); backdrop-filter: blur(10px); overflow: hidden; }
+.market-stats { margin-top: 26px; max-width: 660px; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--glass-border); border-radius: 12px; background: var(--glass); backdrop-filter: blur(10px); overflow: hidden; }
+.stat { padding: 12px 14px; border-right: 1px solid var(--line); }
+.stat:last-child { border-right: 0; }
+.stat.wide { grid-column: 1 / -1; border-right: 0; }
+.stat span { display: block; margin-bottom: 4px; font-family: var(--font-d); font-size: .54rem; font-weight: 700; letter-spacing: .16em; color: var(--text-faint); }
+.stat b { font-family: var(--font-d); font-size: .95rem; font-weight: 700; color: var(--text); }
+.stat.up b { color: var(--green); text-shadow: 0 0 14px rgba(158,234,34,.5); }
+.stat.down b { color: #ee5b7a; text-shadow: 0 0 14px rgba(238,91,122,.4); }
+.stat.skeleton b { color: var(--text-faint); }
+.pulse-text { animation: pulseText 1.6s ease-in-out infinite; }
+@keyframes pulseText { 0%,100% { opacity: 1 } 50% { opacity: .45 } }
+
+.hero-contract { margin-top: 14px; max-width: 660px; display: grid; grid-template-columns: 1fr auto; align-items: center; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--glass); backdrop-filter: blur(10px); overflow: hidden; }
 .hero-contract > div { min-width: 0; padding: 11px 10px 10px 16px; }
 .hero-contract span { display: block; margin-bottom: 5px; font-family: var(--font-d); font-size: .56rem; font-weight: 700; letter-spacing: .16em; color: var(--green); }
 .hero-contract code { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .73rem; font-weight: 600; color: var(--text-dim); }

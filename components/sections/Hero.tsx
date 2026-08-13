@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { BUY_URL, CONTRACT } from "@/components/config";
+import { MarketStats } from "@/components/market/MarketStats";
 
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -60,6 +61,7 @@ export function Hero() {
           <ExternalLink href={BUY_URL} className="button button-primary">BUY $BAMNU <span>↗</span></ExternalLink>
           <a href="#community" className="button button-secondary">JOIN THE JOURNEY <span>↓</span></a>
         </div>
+        <MarketStats />
         <div className="hero-contract">
           <div><span>OFFICIAL CONTRACT</span><code>{CONTRACT}</code></div>
           <CopyButton compact />
