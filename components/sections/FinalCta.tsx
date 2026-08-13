@@ -1,6 +1,6 @@
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { CopyButton } from "@/components/ui/CopyButton";
-import { BUY_URL, CONTRACT, TIKTOK_URL, X_URL } from "@/components/config";
+import { BUY_URL, CONTRACT, TELEGRAM_URL, TIKTOK_URL, X_URL } from "@/components/config";
 
 export function FinalCta() {
   return (
@@ -14,6 +14,7 @@ export function FinalCta() {
           <ExternalLink href={BUY_URL} className="button button-primary">BUY $BAMNU ↗</ExternalLink>
           <ExternalLink href={X_URL} className="text-link">X / @BAMNU83 ↗</ExternalLink>
           <ExternalLink href={TIKTOK_URL} className="text-link">TIKTOK / @BAMNU98 ↗</ExternalLink>
+          <ExternalLink href={TELEGRAM_URL} className="text-link">TELEGRAM ↗</ExternalLink>
         </div>
         <div className="final-contract"><code>{CONTRACT}</code><CopyButton compact /></div>
       </div>
