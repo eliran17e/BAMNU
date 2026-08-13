@@ -1,15 +1,23 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { BUY_URL, CONTRACT } from "@/components/config";
 import { MarketStats } from "@/components/market/MarketStats";
 
+const HeroCanvas = dynamic(() => import("@/components/three/HeroCanvas"), { ssr: false, loading: () => null });
+
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const [reaction, setReaction] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
+  const [wantsMotion, setWantsMotion] = useState(false);
+
+  useEffect(() => {
+    setWantsMotion(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -53,6 +61,7 @@ export function Hero() {
   return (
     <section ref={heroRef} id="top" className={`hero ${heroVisible ? "is-active" : "is-paused"}`} aria-labelledby="hero-title">
       <div className="grain" aria-hidden="true" />
+      {wantsMotion && <HeroCanvas active={heroVisible} />}
       <div className="hero-copy">
         <p className="eyebrow"><span className="pulse-dot" /> SOLANA · BUILT IN PUBLIC</p>
         <h1 id="hero-title"><span>BAMNU—</span>THE PANDA WHO <em>REFUSED</em> TO QUIT.</h1>

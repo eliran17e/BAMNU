@@ -58,6 +58,8 @@ img { display: block; max-width: 100%; }
 .hero { --px: 0; --py: 0; position: relative; min-height: 100svh; padding: 125px 5vw 70px; display: grid; grid-template-columns: minmax(0,1.05fr) minmax(380px,.95fr); align-items: center; isolation: isolate; overflow: hidden; background: radial-gradient(120% 90% at 75% 20%, rgba(151,56,238,.14), transparent 55%), radial-gradient(90% 70% at 15% 90%, rgba(158,234,34,.08), transparent 55%), var(--bg); border-bottom: 1px solid var(--line); }
 .grain,.final-noise { position: absolute; inset: 0; z-index: -1; opacity: .5; pointer-events: none; background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 4px); }
 .hero::before { content: ""; position: absolute; width: 48vw; height: 48vw; right: -10vw; top: -19vw; border-radius: 50%; background: radial-gradient(circle, rgba(151,56,238,.28), transparent 62%); z-index: -2; }
+.hero-webgl { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.hero-webgl canvas { width: 100% !important; height: 100% !important; }
 .hero-copy { position: relative; z-index: 4; max-width: 770px; }
 .eyebrow,.kicker { margin: 0 0 18px; font-family: var(--font-d); font-size: .7rem; font-weight: 700; letter-spacing: .18em; color: var(--green); }
 .pulse-dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 5px rgba(158,234,34,.15); animation: pulse 1.8s infinite; }
