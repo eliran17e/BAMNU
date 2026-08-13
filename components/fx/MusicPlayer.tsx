@@ -11,6 +11,39 @@ export function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [index, setIndex] = useState(0);
+  const startedRef = useRef(false);
+
+  // Start the anthem at low volume as soon as the browser allows it: immediately
+  // when autoplay is permitted, otherwise on the visitor's first interaction.
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0.35;
+
+    const start = (event?: Event) => {
+      if (startedRef.current) return;
+      // let the toggle button handle its own click instead of racing it
+      if (event?.target instanceof Element && event.target.closest(".music-player")) return;
+      startedRef.current = true;
+      cleanup();
+      audio.play().then(() => setPlaying(true)).catch(() => {});
+    };
+    const cleanup = () => {
+      window.removeEventListener("pointerdown", start);
+      window.removeEventListener("keydown", start);
+      window.removeEventListener("touchstart", start);
+    };
+
+    audio.play().then(() => {
+      startedRef.current = true;
+      setPlaying(true);
+    }).catch(() => {
+      window.addEventListener("pointerdown", start, { passive: true });
+      window.addEventListener("keydown", start);
+      window.addEventListener("touchstart", start, { passive: true });
+    });
+    return cleanup;
+  }, []);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -23,6 +56,7 @@ export function MusicPlayer() {
   }, [playing, index]);
 
   function toggle() {
+    startedRef.current = true;
     setPlaying((value) => !value);
   }
 
