@@ -79,7 +79,7 @@ img { display: block; max-width: 100%; }
 .copy-button.compact { border: 0; border-radius: 0; align-self: stretch; }
 .copy-button:hover,.copy-button.copied { background: var(--green); color: var(--ink); }
 
-.walk-stage { position: relative; align-self: stretch; min-height: 640px; z-index: 2; transform: translate(calc(var(--px) * -5px),calc(var(--py) * -4px)); transition: transform .25s ease-out; }
+.walk-stage { position: relative; align-self: stretch; min-height: 640px; z-index: 2; transform: perspective(900px) rotateY(calc(var(--px) * 5deg)) rotateX(calc(var(--py) * -3.5deg)) translate(calc(var(--px) * -5px),calc(var(--py) * -4px)); transform-style: preserve-3d; transition: transform .25s ease-out; }
 .sun-disc { position: absolute; width: min(34vw,510px); aspect-ratio: 1; top: 10%; right: 3%; border-radius: 50%; background: radial-gradient(circle at 38% 32%, rgba(151,56,238,.85), var(--purple-dark) 72%); border: 1px solid rgba(151,56,238,.5); box-shadow: var(--glow-purple), inset 0 0 60px rgba(0,0,0,.45); transform: translate(calc(var(--px) * -12px),calc(var(--py) * -8px)); }
 .sun-disc::after { content: "38"; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.14); font-family: var(--font-d); font-size: 13rem; font-weight: 700; letter-spacing: -.08em; }
 .mascot-button { position: absolute; z-index: 5; width: min(39vw,590px); right: calc(2% + var(--walk) * 5%); bottom: 4%; padding: 0; border: 0; background: transparent; cursor: pointer; transform: translate(calc(var(--px) * 10px),calc(var(--py) * 5px)) rotate(calc(-1deg + var(--walk) * 2deg)); animation: walkIn 1.1s cubic-bezier(.18,.8,.2,1) both, bodyBounce .76s 1.1s ease-in-out infinite; transform-origin: center 85%; }
@@ -112,6 +112,18 @@ img { display: block; max-width: 100%; }
 .is-paused .mascot-button,.is-paused .mascot-shadow,.is-paused .dust i { animation-play-state: paused; }
 .scroll-cue { position: absolute; z-index: 10; left: 50%; bottom: 18px; display: flex; align-items: center; gap: 12px; transform: translateX(-50%); font-family: var(--font-d); font-size: .56rem; font-weight: 700; letter-spacing: .18em; color: var(--text-dim); }
 .scroll-cue i { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--glass-border); border-radius: 50%; color: var(--green); font-style: normal; animation: nudge 1.5s infinite; }
+
+/* scroll reveals */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; transition-delay: var(--rd, 0s); }
+.reveal.is-inview { opacity: 1; transform: none; }
+
+/* marquee strip */
+.marquee { overflow: hidden; border-block: 1px solid var(--line); background: rgba(158,234,34,.045); }
+.marquee-track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+.marquee-half { display: flex; align-items: center; padding: 15px 0; }
+.marquee-half span { display: flex; align-items: center; white-space: nowrap; font-family: var(--font-d); font-size: .82rem; font-weight: 700; letter-spacing: .16em; color: var(--green); }
+.marquee-half span i { margin: 0 26px; font-style: normal; color: var(--purple); text-shadow: 0 0 12px rgba(151,56,238,.8); }
+.marquee:hover .marquee-track { animation-play-state: paused; }
 
 .section-pad { padding: 110px 5vw; }
 .section-heading { display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: end; gap: 4vw; margin-bottom: 70px; }
@@ -246,6 +258,7 @@ footer { padding: 70px 5vw 28px; background: var(--bg-deep); color: var(--text);
 @keyframes pulse { 0%,100%{box-shadow:0 0 0 5px rgba(158,234,34,.15)}50%{box-shadow:0 0 0 9px rgba(158,234,34,0)} }
 @keyframes drift1 { from { transform: translate(0,0) scale(1) } to { transform: translate(6vw,4vw) scale(1.15) } }
 @keyframes drift2 { from { transform: translate(0,0) scale(1) } to { transform: translate(-5vw,-3vw) scale(1.1) } }
+@keyframes marquee { to { transform: translateX(-50%) } }
 
 @media (max-width: 1050px) {
   .hero { grid-template-columns: 1fr .8fr; }
@@ -356,6 +369,8 @@ footer { padding: 70px 5vw 28px; background: var(--bg-deep); color: var(--text);
   html { scroll-behavior: auto; }
   *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .mascot-button { opacity: 1; transform: none; }
+  .reveal { opacity: 1; transform: none; }
+  .marquee-track { animation: none; }
 }
 
 /* Roadmap */

@@ -11,6 +11,8 @@ import { MemeWall } from "@/components/sections/MemeWall";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Footer } from "@/components/sections/Footer";
+import { Marquee } from "@/components/fx/Marquee";
+import { principles } from "@/components/content";
 
 export default function Home() {
   return (
@@ -18,6 +20,7 @@ export default function Home() {
       <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
       <Topbar />
       <Hero />
+      <Marquee items={[...principles, "$BAMNU ON SOLANA"]} />
       <Story />
       <HowToBuy />
       <ContractSection />
