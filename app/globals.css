@@ -62,7 +62,8 @@ img { display: block; max-width: 100%; }
 .hero { --px: 0; --py: 0; position: relative; min-height: 100svh; padding: 125px 5vw 70px; display: grid; grid-template-columns: minmax(0,1.05fr) minmax(380px,.95fr); align-items: center; isolation: isolate; overflow: hidden; background: radial-gradient(120% 90% at 75% 20%, rgba(151,56,238,.14), transparent 55%), radial-gradient(90% 70% at 15% 90%, rgba(158,234,34,.08), transparent 55%), var(--bg); border-bottom: 1px solid var(--line); }
 .grain,.final-noise { position: absolute; inset: 0; z-index: -1; opacity: .5; pointer-events: none; background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 4px); }
 .hero::before { content: ""; position: absolute; width: 48vw; height: 48vw; right: -10vw; top: -19vw; border-radius: 50%; background: radial-gradient(circle, rgba(151,56,238,.28), transparent 62%); z-index: -2; }
-.hero-webgl { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.hero-webgl, .hero-webgl * { pointer-events: none !important; }
+.hero-webgl { position: absolute; inset: 0; z-index: 1; }
 .hero-webgl canvas { width: 100% !important; height: 100% !important; }
 .hero-copy { position: relative; z-index: 4; max-width: 770px; }
 .eyebrow,.kicker { margin: 0 0 18px; font-family: var(--font-d); font-size: .7rem; font-weight: 700; letter-spacing: .18em; color: var(--green); }
@@ -327,6 +328,9 @@ footer { padding: 70px 5vw 28px; background: var(--bg-deep); color: var(--text);
   .hero { min-height: auto; padding: 100px 20px 70px; display: flex; flex-direction: column; align-items: stretch; }
   .hero::before { width: 90vw; height: 90vw; top: -42vw; right: -34vw; }
   .hero-copy { display: contents; }
+  /* display:contents removes .hero-copy's stacking context, so lift its children
+     above the absolutely-positioned WebGL canvas explicitly */
+  .hero .eyebrow, .hero h1, .hero-lede, .hero-actions, .hero .market-stats, .hero .hero-contract { position: relative; z-index: 4; }
   .hero h1 { font-size: clamp(3.4rem,16vw,5.4rem); order: 1; }
   .eyebrow { order: 0; }
   .hero-lede { order: 3; margin-top: 22px; }
@@ -335,8 +339,7 @@ footer { padding: 70px 5vw 28px; background: var(--bg-deep); color: var(--text);
   .market-stats { order: 5; margin-top: 22px; }
   .hero-contract { order: 6; margin-top: 14px; }
   .hero-contract code { font-size: .63rem; }
-  .hero-contract .copy-button span:first-child { font-size: 0; }
-  .hero-contract .copy-button span:first-child::after { content: "COPY"; font-size: .65rem; }
+  .hero-contract .copy-button { font-size: .6rem; padding: 10px 12px; gap: 8px; }
   .walk-stage { order: 2; height: 420px; min-height: 420px; margin: -12px -10px 0; }
   .sun-disc { width: 330px; top: 36px; right: -60px; }
   .sun-disc::after { font-size: 8rem; }
